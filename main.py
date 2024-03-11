@@ -1,4 +1,4 @@
-from priority_queue import PriorityQueue
+from queue import PriorityQueue
 def main():
     pq = PriorityQueue()
   
