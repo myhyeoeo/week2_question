@@ -3,18 +3,20 @@ class PriorityQueue:
     self.heap = []
 
   def push(self, item, priority):
-    entry = (-priority, item)
+    entry = (priority, item)
     self.heap.append(entry)
     self._sift_up(len(self.heap) - 1)
 
   def pop(self):
-    if not self.heap:
-        raise IndexError("Priority queue is empty")
-
-    self._swap(0, len(self.heap) - 1)
-    priority, item = self.heap.pop()
-    self._sift_down(0)
-    return item
+    if len(self.heap) > 1:
+      top_element = self.heap[0]
+      self.heap[0] = self.heap.pop()
+      self._sift_down(0)
+      return top_element[1]
+    elif len(self.heap) == 1:
+      return self.heap.pop()[1]
+    else:
+      return None
 
   def _sift_up(self, index):
     while index > 0:
@@ -32,11 +34,11 @@ class PriorityQueue:
       smallest = index
 
       if left_child_index < len(self.heap) and \
-        self.heap[left_child_index][0] < self.heap[smallest][0]:
+          self.heap[left_child_index][0] < self.heap[smallest][0]:
         smallest = left_child_index
 
       if right_child_index < len(self.heap) and \
-        self.heap[right_child_index][0] < self.heap[smallest][0]:
+          self.heap[right_child_index][0] < self.heap[smallest][0]:
         smallest = right_child_index
 
       if smallest != index:
